@@ -1,59 +1,71 @@
-# AngularServiceWorker
+⚙️ 2. Web Workers vs Service Workers în Angular
+Caracteristică	Web Worker 💻	Service Worker 🌐
+Scop:	Mută procesare grea în thread separat	//  Cache, offline, background sync, push
+Rulează în browser?: Da, dar izolat de DOM	//  Da, ca proxy între browser și rețea
+Acces la DOM?:	❌ Nu	// ❌ Nu
+Utilizare în Angular:	Pentru task-uri grele (ex: calcule mari) //	Pentru PWA (offline, cache etc.)
+Comunică cu:	Thread-ul principal prin postMessage() //	Request-uri HTTP, notificări, cache etc.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
 
-## Development server
+✅ Când folosești fiecare?
+🧠 Web Worker:
+Procesare intensivă (ex: analiză de date, algoritmi, calcule)
 
-To start a local development server, run:
+Rulezi logică separată ca să nu blochezi UI-ul
 
-```bash
-ng serve
-```
+Exemplu: redare grafică, parsing JSON mare, AI local
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+🌐 Service Worker:
+Vrei aplicația să funcționeze offline
 
-## Code scaffolding
+Vrei caching avansat pentru fișiere
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Vrei notificări push sau background sync
 
-```bash
-ng generate component component-name
-```
+Angular are suport prin @angular/service-worker
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-```bash
-ng generate --help
-```
 
-## Building
+Am facut push notification cu firebase
 
-To build the project run:
+De ce ai avea nevoie de Firebase?
+✅ Avantaje:
+Ce face Firebase (FCM)    //	Ce înseamnă pentru tine
+Găzduiește infrastructura pentru push	//  Nu mai trebuie să construiești un server propriu
+Trimite notificări pe Android, iOS, web	//  Unificat, standardizat
+Gestionează token-uri și permisiuni	//  Mai puțină bătaie de cap
+Suportă notificări din consolă	//  Poți testa rapid fără cod backend
+Scalabil și gratuit pentru volume mici	//  Bun pentru proiecte personale sau demo
 
-```bash
-ng build
-```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Ce este SwPush?
+SwPush este o clasă din @angular/service-worker care îți permite:
 
-## Running unit tests
+să cere permisiunea pentru notificări push
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+să primești notificări
 
-```bash
-ng test
-```
+să gestionezi subscription-ul (PushSubscription) pe care îl trimiți către backend
 
-## Running end-to-end tests
 
-For end-to-end (e2e) testing, run:
+Aplicația să aibă @angular/service-worker activ (✅ tu deja ai)
 
-```bash
-ng e2e
-```
+HTTPS activ (sau localhost)
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Chei VAPID pentru Web Push
 
-## Additional Resources
+Un backend care trimite notificări (ex: cu web-push în Node.js)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Cod Angular cu SwPush
+
+
+SwPush = Web Push în Angular
+Este doar un client pentru Push API (adică: cere permisiunea, face subscription, ascultă mesajele).
+
+Dar:
+
+🛠️ Pentru a trimite notificări, ai nevoie de un backend care:
+
+Primește PushSubscription de la client
+
+Trimite notificarea către acel client prin Web Push Protocol
