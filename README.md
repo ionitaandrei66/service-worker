@@ -69,3 +69,27 @@ Dar:
 Primește PushSubscription de la client
 
 Trimite notificarea către acel client prin Web Push Protocol
+
+
+Ce e un Web Worker?
+Web Worker = un thread separat care rulează cod JS în fundal.
+Angular îl suportă nativ din CLI și e ideal pentru:
+
+Calcule CPU-intensive
+
+Procesare date mari
+
+Analiză sau parsare JSON/XML mari
+
+Conversii media (ex: imagini, audio)
+
+ng generate web-worker calcule
+
+Ce poți face cu el?
+Parsare JSON foarte mare
+
+Procesare de imagini (cu canvas)
+
+Calcul de rute (pentru hărți)
+
+Generare de fișiere, PDF-uri, etc.
